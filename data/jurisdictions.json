@@ -1,0 +1,98 @@
+[
+  {
+    "id": "city-of-miami",
+    "name": "City of Miami",
+    "state": "FL",
+    "method": "email",
+    "emails": [
+      "jdelatorre@miamigov.com"
+    ],
+    "form_url": "",
+    "notes": "",
+    "form_note": "",
+    "form_fields": [],
+    "order": 1
+  },
+  {
+    "id": "broward-county",
+    "name": "Broward County",
+    "state": "FL",
+    "method": "email",
+    "emails": [
+      "CFOLEY@broward.org",
+      "WWEDGISRecordsRequest@broward.org"
+    ],
+    "form_url": "",
+    "notes": "",
+    "form_note": "",
+    "form_fields": [],
+    "order": 2
+  },
+  {
+    "id": "fdot",
+    "name": "FDOT",
+    "state": "Federal/State",
+    "method": "form",
+    "emails": [],
+    "form_url": "https://fdot.justfoia.com/Forms/Launch/d705cbd6-1396-49b7-939e-8d86c5a87deb",
+    "notes": "Formulario de Public Records Request de FDOT.",
+    "form_note": "",
+    "form_fields": [],
+    "order": 3
+  },
+  {
+    "id": "miami-dade-county",
+    "name": "Miami-Dade County",
+    "state": "FL",
+    "method": "pending",
+    "emails": [],
+    "form_url": "",
+    "notes": "Proceso fuera del esquema habitual — pendiente de documentar.",
+    "form_note": "",
+    "form_fields": [],
+    "order": 4
+  },
+  {
+    "id": "gdot",
+    "name": "GDOT",
+    "state": "Federal/State",
+    "method": "email",
+    "emails": [
+      "openrecords@dot.ga.gov"
+    ],
+    "form_url": "",
+    "notes": "",
+    "form_note": "GDOT no tiene portal web: se llena el formulario oficial \"GDOT Open Records Request\" (PDF) y se envía por correo a openrecords@dot.ga.gov, adjuntando la imagen de referencia del proyecto.",
+    "form_fields": [
+      {
+        "label": "Requestor Name",
+        "value": "Karina Vargas"
+      },
+      {
+        "label": "Requestor Address",
+        "value": "10604 NW 48th St, Coral Springs, FL 33076"
+      },
+      {
+        "label": "Requestor Phone",
+        "value": "954-937-5239"
+      },
+      {
+        "label": "Requestor Email",
+        "value": "diegom@kmvfibertelecom.com"
+      },
+      {
+        "label": "Type of information/document/record requested",
+        "value": "[DRAFT]"
+      },
+      {
+        "label": "County",
+        "value": "[Condado]"
+      },
+      {
+        "label": "Location (State Route/Highway/Interstate/Road)",
+        "value": "[STREETS], between [LIMITS]"
+      }
+    ],
+    "order": 5
+  }
+]

@@ -1,0 +1,15 @@
+# Entorno de Python y cachés (se recrean solos con uv)
+.venv/
+__pycache__/
+*.pyc
+
+# Datos locales de cada instalación
+data/servidor.txt
+data/feedback.csv
+*.log
+
+# Configuración local de herramientas
+.claude/
+
+# Archivos temporales de Office
+~$*

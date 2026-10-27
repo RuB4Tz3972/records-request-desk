@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Records Request Desk</title>
+<style>
+  html,body{margin:0;height:100%}
+  body{display:grid;place-items:center;background:#16110d;color:#f4ede4;font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+  .box{text-align:center;padding:24px}
+  .logo{width:84px;height:84px;margin:0 auto 18px;border-radius:22px;border:3px solid #e8710a;display:grid;place-items:center;
+    animation:pulse 1.6s ease-in-out infinite}
+  .logo svg{width:44px;height:44px}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:-.01em}
+  p{margin:0;color:#cbbdaf}
+  .bar{width:240px;height:6px;border-radius:6px;background:#2a221c;overflow:hidden;margin:22px auto 12px}
+  .bar i{display:block;height:100%;width:38%;border-radius:6px;background:#e8710a;animation:slide 1.2s ease-in-out infinite}
+  small{color:#a39588}
+  @keyframes slide{from{transform:translateX(-110%)}to{transform:translateX(270%)}}
+  @keyframes pulse{50%{transform:scale(1.05)}}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#e8710a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 13h6M9 17h4"/>
+    </svg>
+  </div>
+  <h1>Records Request Desk</h1>
+  <div class="bar"><i></i></div>
+  <p id="msg">Abriendo la app…</p>
+  <small id="sub"></small>
+</div>
+<script>
+  // Espera a que el servidor responda y entra a la app.
+  const port = new URLSearchParams(location.search).get("port") || "8501";
+  const url = `http://localhost:${port}/`;
+  let tries = 0;
+  function check() {
+    const img = new Image();
+    img.onload = () => location.replace(url);
+    img.onerror = () => {
+      tries += 1;
+      if (tries === 8) {
+        document.getElementById("msg").textContent = "Preparando todo…";
+        document.getElementById("sub").textContent = "La primera vez instala lo necesario y puede tardar un par de minutos.";
+      }
+      if (tries === 400) {
+        document.getElementById("msg").textContent = "La app no arrancó.";
+        document.getElementById("sub").textContent = "Revisa el archivo server-errores.log en %LOCALAPPDATA%\\RecordsRequestDesk.";
+        return;
+      }
+      setTimeout(check, 700);
+    };
+    img.src = `${url}icon.png?t=${Date.now()}`;
+  }
+  check();
+</script>
+</body>
+</html>

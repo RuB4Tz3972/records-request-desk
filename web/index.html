@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Records Request Desk</title>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+
+  <!-- ===== barra lateral ===== -->
+  <aside class="sidebar">
+    <a class="brand" href="#/nueva">
+      <img src="icon.png" alt="">
+      <span><b>Records Request Desk</b><small>Utility Coordination · FL / GA</small></span>
+    </a>
+    <nav class="nav">
+      <a href="#/nueva" data-view="nueva"><i class="ti ti-file-plus"></i><span>Nueva solicitud</span></a>
+      <a href="#/jurisdicciones" data-view="jurisdicciones"><i class="ti ti-building-community"></i><span>Jurisdicciones</span><b class="count" id="countJ"></b></a>
+      <a href="#/plantilla" data-view="plantilla"><i class="ti ti-writing"></i><span>Plantilla</span></a>
+      <a href="#/feedback" data-view="feedback"><i class="ti ti-message-heart"></i><span>Feedback</span><b class="count" id="countF"></b></a>
+    </nav>
+    <div class="side-card" id="sideCard"></div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ===== nueva solicitud ===== -->
+    <section class="view" id="view-nueva">
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Paso a paso</p>
+          <h1>Nueva solicitud</h1>
+          <p class="lead">Describe el tramo, elige a quién pedir y envía cada solicitud ya redactada.</p>
+        </div>
+        <button class="btn ghost" id="btnReset" type="button"><i class="ti ti-refresh"></i>Empezar de nuevo</button>
+      </header>
+
+      <ol class="stepper" id="stepper">
+        <li data-step="1"><button type="button"><span class="num">1</span><span><b>Tramo</b><small id="sum1">Calles y límites</small></span></button></li>
+        <li data-step="2"><button type="button"><span class="num">2</span><span><b>Jurisdicciones</b><small id="sum2">A quién pedir</small></span></button></li>
+        <li data-step="3"><button type="button"><span class="num">3</span><span><b>Enviar</b><small id="sum3">Correo o formulario</small></span></button></li>
+      </ol>
+
+      <div class="work" id="work">
+        <div class="work-main">
+
+          <div class="panel step" data-step="1">
+            <h2>¿Dónde es el proyecto?</h2>
+            <p class="hint">Escribe las calles tal como aparecen en el mapa, por ejemplo NW 10th Ave.</p>
+
+            <label class="label" for="streetInput">Calles del proyecto <span class="tag">along</span></label>
+            <div class="chips-input" id="streetsBox">
+              <input id="streetInput" autocomplete="off" placeholder="Escribe una calle y presiona Enter">
+            </div>
+            <p class="micro">Se unen con “&amp;”. También puedes pegar varias, una por línea.</p>
+
+            <span class="label">Límites del tramo <span class="tag">between</span></span>
+            <div class="limits">
+              <input id="limitA" autocomplete="off" placeholder="NW 22nd St" aria-label="Límite 1">
+              <button class="icon-btn" id="btnSwap" type="button" title="Intercambiar límites" aria-label="Intercambiar límites"><i class="ti ti-arrows-exchange"></i></button>
+              <input id="limitB" autocomplete="off" placeholder="NW 18th St" aria-label="Límite 2">
+            </div>
+
+            <span class="label">Mapa del proyecto <span class="opt">opcional</span></span>
+            <label class="dropzone" id="dropzone">
+              <input type="file" id="mapInput" accept="image/png,image/jpeg,image/webp" hidden>
+              <span class="dz-empty"><i class="ti ti-photo-up"></i><span><b>Pega la captura con Ctrl+V</b>, arrástrala aquí o haz clic para buscarla<small>Va debajo del texto en el borrador de Outlook</small></span></span>
+              <span class="dz-full"><img id="mapThumb" alt=""><span><b id="mapName"></b><small>Se incluirá en los borradores .eml</small></span><button class="icon-btn" id="btnMapRemove" type="button" aria-label="Quitar mapa"><i class="ti ti-trash"></i></button></span>
+            </label>
+
+            <div class="step-foot">
+              <span class="inline-hint" id="hint1"></span>
+              <button class="btn primary" type="button" data-go="2">Elegir jurisdicciones <i class="ti ti-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="panel step" data-step="2" hidden>
+            <h2>¿A quién se lo pedimos?</h2>
+            <p class="hint">Elige una o varias. Cada una recibe su propia solicitud.</p>
+            <div class="search"><i class="ti ti-search"></i><input id="jSearch" placeholder="Buscar jurisdicción…" autocomplete="off"></div>
+            <div class="jgrid" id="jGrid"></div>
+            <div class="step-foot">
+              <button class="btn ghost" type="button" data-go="1"><i class="ti ti-arrow-left"></i>Atrás</button>
+              <span class="inline-hint" id="hint2"></span>
+              <button class="btn primary" type="button" data-go="3">Preparar envíos <i class="ti ti-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="panel step" data-step="3" hidden>
+            <div class="send-head">
+              <div>
+                <h2>Envía cada solicitud</h2>
+                <p class="hint" id="sendHint">Sigue los pasos de cada tarjeta y márcala cuando la envíes.</p>
+              </div>
+              <div class="progress"><span id="progressText"></span><div class="progress-bar"><i id="progressFill"></i></div></div>
+            </div>
+            <div class="done-banner" id="doneBanner" hidden>
+              <i class="ti ti-confetti"></i>
+              <div><b>¡Listo! Enviaste todas las solicitudes de este proyecto.</b><span>Puedes empezar otra cuando quieras.</span></div>
+              <button class="btn primary" type="button" id="btnDoneReset">Nueva solicitud</button>
+            </div>
+            <div class="request-list" id="requestList"></div>
+            <div class="step-foot">
+              <button class="btn ghost" type="button" data-go="2"><i class="ti ti-arrow-left"></i>Atrás</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="work-side">
+          <div class="paper">
+            <div class="paper-tabs" id="previewTabs"></div>
+            <div class="paper-meta">
+              <div><span>Para</span><b id="pvTo">—</b></div>
+              <div><span>Asunto</span><b id="pvSubject">—</b></div>
+            </div>
+            <div class="paper-body" id="pvBody"></div>
+            <img class="paper-map" id="pvMap" alt="Mapa del proyecto" hidden>
+          </div>
+          <p class="micro center"><i class="ti ti-eye"></i> Vista previa en vivo · lo resaltado se llena solo</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== jurisdicciones ===== -->
+    <section class="view" id="view-jurisdicciones" hidden>
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Directorio</p>
+          <h1>Jurisdicciones</h1>
+          <p class="lead">A quién se le piden los records y cómo. Los cambios se guardan para todo el equipo.</p>
+        </div>
+        <button class="btn primary" id="btnNewJ" type="button"><i class="ti ti-plus"></i>Nueva jurisdicción</button>
+      </header>
+      <div class="toolbar">
+        <div class="search"><i class="ti ti-search"></i><input id="jSearch2" placeholder="Buscar…" autocomplete="off"></div>
+        <div class="seg" id="methodFilter">
+          <button type="button" data-m="all" class="on">Todas</button>
+          <button type="button" data-m="email"><i class="ti ti-mail"></i>Correo</button>
+          <button type="button" data-m="form"><i class="ti ti-world"></i>Formulario</button>
+          <button type="button" data-m="pending"><i class="ti ti-hourglass"></i>Pendiente</button>
+        </div>
+      </div>
+      <div class="jlist" id="jList"></div>
+    </section>
+
+    <!-- ===== plantilla ===== -->
+    <section class="view" id="view-plantilla" hidden>
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Texto base</p>
+          <h1>Plantilla</h1>
+          <p class="lead">El texto de todas las solicitudes. Las marcas entre corchetes se reemplazan solas.</p>
+        </div>
+      </header>
+      <div class="tpl-grid">
+        <div class="panel">
+          <div class="token-bar">
+            <span>Insertar:</span>
+            <button type="button" data-token="[STREETS]"><i class="ti ti-road"></i>Calles</button>
+            <button type="button" data-token="[LIMITS]"><i class="ti ti-arrows-horizontal"></i>Límites</button>
+            <button type="button" data-token="[JURISDICTION]"><i class="ti ti-building-community"></i>Jurisdicción</button>
+          </div>
+          <textarea id="tplText" rows="16" spellcheck="false"></textarea>
+          <div class="step-foot">
+            <button class="btn ghost" type="button" id="btnTplReset"><i class="ti ti-arrow-back-up"></i>Texto original</button>
+            <span class="inline-hint" id="tplHint"></span>
+            <button class="btn primary" type="button" id="btnTplSave"><i class="ti ti-device-floppy"></i>Guardar para todos</button>
+          </div>
+        </div>
+        <aside class="work-side">
+          <div class="paper">
+            <div class="paper-meta"><div><span>Ejemplo</span><b>City of Miami</b></div></div>
+            <div class="paper-body" id="tplPreview"></div>
+          </div>
+          <p class="micro center">Así se ve con datos de ejemplo</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== feedback ===== -->
+    <section class="view" id="view-feedback" hidden>
+      <header class="page-head">
+        <div>
+          <p class="eyebrow">Tu opinión cuenta</p>
+          <h1>Feedback</h1>
+          <p class="lead">¿Una idea, algo que no funciona o una jurisdicción que falta? Todo queda guardado para la próxima versión.</p>
+        </div>
+      </header>
+      <div class="fb-grid">
+        <form class="panel" id="fbForm" novalidate>
+          <label class="label" for="fbName">Tu nombre <span class="opt">opcional</span></label>
+          <input id="fbName" autocomplete="name" placeholder="Para saber a quién preguntarle">
+          <span class="label">¿Qué nos cuentas?</span>
+          <div class="kind-pick" id="fbKinds"></div>
+          <label class="label" for="fbMsg">Cuéntanos</label>
+          <textarea id="fbMsg" rows="5" placeholder="Por ejemplo: sería útil que el asunto incluya el número de proyecto"></textarea>
+          <p class="field-error" id="fbError"></p>
+          <div class="step-foot"><span></span><button class="btn primary" type="submit"><i class="ti ti-send"></i>Enviar comentario</button></div>
+        </form>
+        <div>
+          <h3 class="list-title" id="fbTitle"></h3>
+          <div class="fb-list" id="fbList"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== editor de jurisdicción ===== -->
+<div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawerTitle">
+  <header>
+    <h2 id="drawerTitle">Nueva jurisdicción</h2>
+    <button class="icon-btn" id="drawerClose" type="button" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+  </header>
+  <form id="jForm" novalidate>
+    <label class="label" for="fName">Nombre</label>
+    <input id="fName" placeholder="Por ejemplo Palm Beach County" autocomplete="off">
+    <span class="label">Estado</span>
+    <div class="seg" id="fState"></div>
+    <span class="label">¿Cómo se piden los records?</span>
+    <div class="method-pick" id="fMethod"></div>
+    <div data-show="email">
+      <label class="label" for="fEmails">Correos <span class="opt">uno por línea</span></label>
+      <textarea id="fEmails" rows="3" placeholder="records@ciudad.gov"></textarea>
+    </div>
+    <div data-show="form">
+      <label class="label" for="fUrl">Link del formulario</label>
+      <input id="fUrl" placeholder="https://…" autocomplete="off">
+    </div>
+    <label class="label" for="fNotes">Notas <span class="opt">opcional</span></label>
+    <textarea id="fNotes" rows="2" placeholder="Instrucciones especiales, a quién copiar…"></textarea>
+    <details class="extra" id="fExtra">
+      <summary><i class="ti ti-chevron-right chev"></i>Formulario o PDF adicional</summary>
+      <label class="label" for="fFormNote">Instrucciones</label>
+      <textarea id="fFormNote" rows="2"></textarea>
+      <span class="label">Campos del formulario</span>
+      <div id="fieldRows"></div>
+      <button class="btn ghost sm" type="button" id="btnAddField"><i class="ti ti-plus"></i>Agregar campo</button>
+      <p class="micro">En los valores puedes usar [STREETS], [LIMITS], [JURISDICTION] y [DRAFT] (el texto completo).</p>
+    </details>
+    <p class="field-error" id="jError"></p>
+  </form>
+  <footer>
+    <button class="btn danger" id="btnDeleteJ" type="button"><i class="ti ti-trash"></i><span>Eliminar</span></button>
+    <span class="grow"></span>
+    <button class="btn ghost" id="btnCancelJ" type="button">Cancelar</button>
+    <button class="btn primary" id="btnSaveJ" type="button">Guardar</button>
+  </footer>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
